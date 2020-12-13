@@ -4,6 +4,7 @@ const clientBot = new Discord.Client();
 
 
 const startCommand = /^\-.+/;
+const cal = /^\-[1-9][0-9]*(\-|\+|\*|\/)[1-9][0-9]*$/;
 
 
 clientBot.once('ready', () => {
@@ -12,17 +13,17 @@ clientBot.once('ready', () => {
 
 clientBot.on('message', message => {
 
-    const messageUser = message.content;
+    const userMessage = message.content;
     
-    if (startCommand.test(messageUser)) {
+    if (startCommand.test(userMessage)) {
 
-        switch ( messageUser.toLowerCase()) {
+        switch ( userMessage.substring(1).toLowerCase()) {
 
-            case  '-quien eres':
-                message.channel.send('Soy la mascota de VTC CrisTiger');
+            case  'quien eres':
+                message.channel.send('Soy la mascota del fundador de este servidor');
                 break;
 
-            case '-normas':
+            case 'normas':
                 const rulesCart = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Normas del servidor:')
@@ -37,19 +38,42 @@ clientBot.on('message', message => {
                 message.channel.send(rulesCart);
                 break;
 
-            case '-avatar':
+            case 'avatar':
                 message.reply('\n Tu avatar es este: \n'+message.author.displayAvatarURL());
                 break;
 
-            case '-nombre usuario':
+            case 'nombre usuario':
             message.reply('\n Tu nombre es: \n ==>  '+message.author.username+'  <==');
             break;
 
             default:
+                if ( cal.test(userMessage) ) {
+                    message.channel.send('==>\t' + getResultByOperator(userMessage) );
+                }
                 break;
         }
     }
 });
+
+function getResultByOperator(userMessage)
+{
+    if ( userMessage.indexOf('*') != -1 ) {
+        const valores = userMessage.substring(1).split('*');
+        return parseInt(valores[0])*parseInt(valores[1]);
+    }
+    if ( userMessage.indexOf('/') != -1 ) {
+        const valores = userMessage.substring(1).split('/');
+        return parseInt(valores[0])/parseInt(valores[1]);
+    }
+    if ( userMessage.indexOf('+') != -1 ) {
+        const valores = userMessage.substring(1).split('+');
+        return parseInt(valores[0])+parseInt(valores[1]);
+    }
+    if ( userMessage.indexOf('-') != -1 ) {
+        const valores = userMessage.substring(1).split('-');
+        return parseInt(valores[0])-parseInt(valores[1]);
+    }
+}
 
 function createErrorMessage(text)
 {
