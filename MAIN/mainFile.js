@@ -10,20 +10,19 @@ clientBot.once('ready', () => {
     console.log("ALATEKA's BOT is online");
 });
 
-
 clientBot.on('message', message => {
 
     const messageUser = message.content;
-
+    
     if (startCommand.test(messageUser)) {
 
-        switch ( messageUser.substring(1).toLowerCase()) {
+        switch ( messageUser.toLowerCase()) {
 
-            case  'quien eres':
+            case  '-quien eres':
                 message.channel.send('Soy la mascota de VTC CrisTiger');
                 break;
 
-            case 'normas':
+            case '-normas':
                 const rulesCart = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setTitle('Normas del servidor:')
@@ -35,9 +34,16 @@ clientBot.on('message', message => {
                 .setTimestamp()
                 .setImage('https://cdn.discordapp.com/attachments/779069086210064385/779098910479876106/1605822045699.png')
                 .setFooter('NORMAS');
-
                 message.channel.send(rulesCart);
                 break;
+
+            case '-avatar':
+                message.reply('\n Tu avatar es este: \n'+message.author.displayAvatarURL());
+                break;
+
+            case '-nombre usuario':
+            message.reply('\n Tu nombre es: \n ==>  '+message.author.username+'  <==');
+            break;
 
             default:
                 break;
@@ -45,15 +51,7 @@ clientBot.on('message', message => {
     }
 });
 
-function getUserNameByID(id)
-{
-    if ( ! clientBot.users.cache.get(id) ) {
-        return createMessageError('No se encontro ningún usuario');
-    }
-    return clientBot.users.cache.get(id);
-}
-
-function createMessageError(text)
+function createErrorMessage(text)
 {
     return '==> ERROR: ' + text;
 }
