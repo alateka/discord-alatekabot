@@ -67,7 +67,11 @@ function getResultByOperator(userMessage)
     }
     if ( userMessage.indexOf('+') != -1 ) {
         const valores = userMessage.substring(1).split('+');
-        return parseInt(valores[0])+parseInt(valores[1]);
+        if ( valores[0] == "1" && valores[1] == "1" ) {
+            return "Eres tonto, o te falta poco";
+        } else { 
+            return parseInt(valores[0])+parseInt(valores[1]);
+        }
     }
     if ( userMessage.indexOf('-') != -1 ) {
         const valores = userMessage.substring(1).split('-');
