@@ -1,4 +1,3 @@
-
 const Discord = new require('discord.js');
 const clientBot = new Discord.Client();
 
@@ -83,5 +82,3 @@ function createErrorMessage(text)
 {
     return '==> ERROR: ' + text;
 }
-
-clientBot.login('Nzg0MzU0NTQ5MDk1MjAyODI2.X8oFGQ.RfKzhUiqAL-attu4pGm8Mw2hQ_g');
