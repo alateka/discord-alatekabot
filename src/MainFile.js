@@ -8,7 +8,7 @@ const date = new Date();
 
 const startCommand = /^\-.+/;
 const cal = /^\-[1-9][0-9]*(\-|\+|\*|\/)[1-9][0-9]*$/;
-const pelisQueryExp = /^(-pelis populares$|-pelis buscar [A-Za-z]+)$/;
+const pelisQueryExp = /^(-pelis populares$|-pelis buscar .+)$/;
 
 //  PELIS API
 const BASEURL_PELIS='https://api.themoviedb.org/3/'
@@ -25,9 +25,11 @@ clientBot.on('message', message => {
 
     if ( pelisQueryExp.test(userMessage) ) {
 
+        let find = dataUser.slice(2).join(" ");
+
         let URL = dataUser[1] == 'populares' ?
             BASEURL_PELIS+'discover/movie?sort_by=popularity.desc&api_key='+config.PELIS_API_KEY+'&language=es-MX&page=1'
-            : BASEURL_PELIS+'search/movie?api_key='+config.PELIS_API_KEY+'&language=es-MX&query='+dataUser[2]+'&page=1';
+            : BASEURL_PELIS+'search/movie?api_key='+config.PELIS_API_KEY+'&language=es-MX&query='+find+'&page=1';
 
         fetch(URL)
             .then(response => response.json())
@@ -39,9 +41,11 @@ clientBot.on('message', message => {
                     return p
                 }).slice(0,5);
 
-                console.log('New data: '
-                    + '\n ===========================================\n'
-                    + URL+'\n'+pelisArray+'\n'+pelisArray.length);
+                console.log(
+                    '\n===========================================\n'
+                    +'-----( New data )-----'
+                    + '\n===========================================\n'
+                    +'URI ==> '+ URL+'\n'+'Pelis ==> '+pelisArray+'\n'+'Count ==> '+pelisArray.length);
 
                for ( let i=0; i<pelisArray.length; i++ ) {
                     let pelisTable = new Discord.MessageEmbed()
