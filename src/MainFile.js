@@ -67,13 +67,47 @@ clientBot.on('message', message => {
 
         switch ( userMessage.substring(1).toLowerCase()) {
 
+            case 'comandos':
+                const commandList = new Discord.MessageEmbed()
+                .setColor('#36a347')
+                .setTitle('Listado de comandos disponibles del BOT de ALATEKA:')
+                .addFields(
+                    { name: '( -quien eres )', value: 'Muestra información sobre este BOT'
+                    +'\n.'
+                    },
+                    { name: '( -normas )', value: 'Muestra el listado de normas que se debe respetar en este servidor'
+                    +'\n.'
+                    },
+                    { name: '( -avatar )', value: 'Muestra la imagen de tu perfil de Discord'
+                    +'\n.'
+                    },
+                    { name: '( -nombre )', value: 'Muestra tu nombre de usuario en Discord, por si a caso \n ni tu mismo sabes quién eres'
+                    +'\n.'
+                    },
+                    { name: '( -[xx]operación[xx] )', value: 'Este bot es también una calculadora simple, sustituye xx por'
+                    +'los numeros a calcular. \nEjemplo: 357+159 | 51/9 | 517*379 | 9-5'
+                    +'\n.'
+                    },
+                    { name: '( -pelis buscar "nombre película" )', value: 'Sirve para buscar películas y obtener información sobre las mismas.' 
+                    +'\n Ejemplo:  -pelis buscar Iron Man'
+                    +'\n.'
+                    },
+                    { name: '( -pelis populares )', value: 'Obtienes un listado de las 5 mejores películas actualmente. "Según themoviedb.org"'
+                    +'\n.'
+                    },
+                )
+                .setImage('https://i.imgur.com/mKFkZA6.png')
+                .setFooter("ALATEKA's_Bot - v01052021beta");
+                message.channel.send(commandList);
+                break;
+
             case  'quien eres':
                 message.channel.send('Soy un BOT idiota. ¿Es que no lo ves? \n Pero también soy el puto amo.');
                 break;
 
             case 'normas':
                 const rulesCart = new Discord.MessageEmbed()
-                .setColor('#0099ff')
+                .setColor('#36a347')
                 .setTitle('Normas del servidor:')
                 .addFields(
                     { name: 'Regla 1º', value: 'Respeta a todos los usuarios.' },
